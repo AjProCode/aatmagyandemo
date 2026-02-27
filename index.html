@@ -1,510 +1,579 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Menu, X, Phone, Clock, ChevronRight, Heart, Users, MapPin, 
-  Sparkles, BookOpen, Quote, Target, Star, ShieldCheck, ExternalLink,
-  Wind, Mic2, VolumeX, Sun, Calendar, PlayCircle, Mail, Landmark,
-  Layers, Info, CheckCircle2
-} from 'lucide-react';
-
-const App = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [activeModal, setActiveModal] = useState(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const Modal = ({ isOpen, onClose, children }) => {
-    if (!isOpen) return null;
-    return (
-      <div className="modal-overlay" onClick={onClose}>
-        <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-          <button onClick={onClose} className="modal-close-btn">
-            <X size={24} />
-          </button>
-          <div className="modal-body">
-            {children}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const SamatvaDeepDive = () => (
-    <div className="deep-dive-content">
-      <div className="deep-dive-header">
-        <div className="deep-dive-sidebar">
-          <div className="mentor-image-wrapper">
-            <img 
-              src="https://images.unsplash.com/photo-1545389336-cf09bdabc999?auto=format&fit=crop&q=80&w=800" 
-              alt="Aparna Nevatia"
-            />
-          </div>
-          <p className="mentor-name-caption">Aparna Nevatia</p>
-        </div>
-        <div className="deep-dive-main">
-          <h2 className="section-title-large">Samatva Dhyan</h2>
-          
-          <section className="level-block">
-            <h4 className="level-heading">Level - 1</h4>
-            <p className="level-text">
-              Atman Gyan Dhyan Sadhna starts from Soham Dhyan or Samatva Dhyan. It sets the foundation for higher spiritual learning and helps in breaking deep-rooted notions, like — "meditation is meant only for the retired or for sanyasis." It includes basic techniques explaining the true nature of dhyan and easy, effective ways to meditate at home.
-            </p>
-          </section>
-
-          <section className="level-block">
-            <h4 className="level-heading">Level - 2</h4>
-            <p className="level-text">
-              After basic concepts are understood, one moves to higher levels. While the basic level aims for happiness and peace, this level seeks answers to ultimate questions. Guided by Aparnaji, seekers attempt to know what God really is. From miraculous experiences to boundless energy, advanced meditation has no limits.
-            </p>
-            <div className="quote-box">
-              "Reinforcing the aim of rejuvenation, to move on the path of spirituality... and to spread the message of 'Sarve Bhavantu Sukhinah' as far as possible."
-            </div>
-          </section>
-        </div>
-      </div>
-
-      <div className="sadhana-block">
-        <h3 className="sadhana-title">Atma Gyan Dhyan Sadhana</h3>
-        <p className="sadhana-italic">
-          Initiation into this serious path is given by our Guru, Mrs. Aparna Nevatia. These secretive techniques are disclosed only in the pure Guru-Shishya parampara.
-        </p>
-        <p className="sadhana-text">
-          It covers the four interwoven paths of yoga: <span className="highlight-text">GyanYog, Karma Yog, Bhakti Yog, and RajYog</span>. Through rigorous discipline (tap) and Sadhana, the Saadhak moves deeper into the spiritual world while fulfilling material duties.
-        </p>
-        <div className="tag-container">
-          {['GyanYog', 'Karma Yog', 'Bhakti Yog', 'RajYog'].map(tag => (
-            <span key={tag} className="path-tag">{tag}</span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="app-container">
-      <Modal isOpen={activeModal === 'samatva'} onClose={() => setActiveModal(null)}>
-        <SamatvaDeepDive />
-      </Modal>
-
-      <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
-        <div className="nav-inner">
-          <div className="nav-logo-group">
-            <div className="logo-icon">
-              <Sparkles size={20} />
-            </div>
-            <div className="logo-text-group">
-              <h1 className="logo-main">ATMAN GYAN</h1>
-              <p className="logo-sub">Dhyan Sadhana</p>
-            </div>
-          </div>
-          <div className="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Dhyan Sadhna</a>
-            <a href="#">Outreach</a>
-            <a href="#">Contact</a>
-          </div>
-        </div>
-      </nav>
-
-      <header className="hero">
-        <div className="hero-inner">
-          <div className="badge">A Spiritual Foundation</div>
-          <h2 className="hero-heading">
-            “Observe <span className="hero-underline">Kutastha</span>, that is My Form.”
-          </h2>
-          <p className="hero-subheading">
-            We seek to know the Self and achieve our truest potential through Yogic Science regardless of caste, creed or religion.
-          </p>
-        </div>
-      </header>
-
-      <main className="main-grid-section">
-        <div className="grid-container">
-          
-          {/* Samatva Dhyan Card */}
-          <div className="card">
-            <div className="card-image">
-              <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800" alt="Samatva" />
-            </div>
-            <h3 className="card-title">Samatva Dhyan</h3>
-            <p className="card-desc">
-              Samatva Dhyan is the core in the wheel of Dhyan Sadhna led by Aparna Ji. It sets the foundation for higher spiritual growth.
-            </p>
-            <button onClick={() => setActiveModal('samatva')} className="card-btn">Read More</button>
-          </div>
-
-          {/* Bhagwad Geeta Card */}
-          <div className="card">
-            <div className="card-image">
-              <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800" alt="Geeta" />
-            </div>
-            <h3 className="card-title">Bhagwad Geeta</h3>
-            <p className="card-desc">
-              Aparnaji's principles go above religion, following the ultimate text that leads us to the truth. She has taken Bhagawada Gita.
-            </p>
-            <button className="card-btn">Read More</button>
-          </div>
-
-          {/* Anna Daan Card */}
-          <div className="card">
-            <div className="card-image">
-              <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800" alt="Anna Daan" />
-            </div>
-            <h3 className="card-title">Anna Daan</h3>
-            <p className="card-desc">
-              An outreach initiative to contribute to Zero Hunger. Rejuvenators aim at feeding the underprivileged across the community.
-            </p>
-            <button className="card-btn">Read More</button>
-          </div>
-
-          {/* Jagrati Card */}
-          <div className="card">
-            <div className="card-image">
-              <img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&q=80&w=800" alt="Jagrati" />
-            </div>
-            <h3 className="card-title">Jagrati</h3>
-            <p className="card-desc">
-              Educating and spiritualising underprivileged children with material aids like clothes, academic food, and moral guidance.
-            </p>
-            <button className="card-btn">Read More</button>
-          </div>
-
-        </div>
-      </main>
-
-      <footer className="footer">
-        <div className="footer-inner">
-          <div className="footer-left">
-            <h4 className="footer-title">Support Our Mission</h4>
-            <p className="footer-desc">Your contributions help us continue our outreach programs like Anna Daan and Jagrati.</p>
-          </div>
-          <div className="bank-details">
-            <div className="bank-header">
-              <Landmark className="bank-icon" />
-              <span className="bank-label">Bank Details</span>
-            </div>
-            <p className="bank-info">Rejuvenation – A Spiritual Foundation</p>
-            <p className="bank-info">A/C: 50200008683488 | IFSC: HDFC0000078</p>
-          </div>
-        </div>
-      </footer>
-
-      <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@200..800&display=swap');
-        
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atman Gyan - Dhyan Sadhana</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet">
+    <!-- Icons (Lucide replacement via SVG) -->
+    <style>
         :root {
-          --primary-red: #B91C1C;
-          --text-slate: #475569;
-          --heading-slate: #1E293B;
-          --bg-cream: #FDFCFB;
+            --primary-red: #B91C1C;
+            --text-slate: #475569;
+            --heading-slate: #1E293B;
+            --bg-cream: #FDFCFB;
+            --transition: all 0.3s ease;
         }
 
-        * { box-sizing: border-box; }
-        body { margin: 0; padding: 0; }
-        
-        .app-container {
-          min-height: 100-vh;
-          background-color: var(--bg-cream);
-          font-family: 'Plus Jakarta Sans', sans-serif;
-          color: var(--heading-slate);
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        .font-serif { font-family: 'Playfair Display', serif; }
+        body {
+            background-color: var(--bg-cream);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--heading-slate);
+            line-height: 1.6;
+        }
+
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
 
         /* Navbar */
         .navbar {
-          position: fixed;
-          top: 0;
-          width: 100%;
-          z-index: 50;
-          transition: all 0.3s ease;
-          padding: 24px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            transition: var(--transition);
+            padding: 24px 0;
         }
-        .navbar-scrolled {
-          background-color: white;
-          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-          padding: 12px 0;
+
+        .navbar.scrolled {
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            padding: 12px 0;
         }
+
         .nav-inner {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 0 24px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .nav-logo-group { display: flex; align-items: center; gap: 12px; }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
         .logo-icon {
-          width: 40px;
-          height: 40px;
-          background-color: var(--primary-red);
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-red);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
         }
-        .logo-text-group h1 {
-          font-family: 'Playfair Display', serif;
-          font-size: 18px;
-          font-weight: 900;
-          margin: 0;
-          line-height: 1;
+
+        .logo-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 900;
+            line-height: 1;
         }
-        .logo-sub {
-          font-size: 8px;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: var(--primary-red);
-          font-weight: 800;
-          margin: 4px 0 0 0;
+
+        .logo-text p {
+            font-size: 8px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--primary-red);
+            font-weight: 800;
+            margin-top: 4px;
         }
-        .nav-links { display: flex; gap: 32px; }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
         .nav-links a {
-          text-decoration: none;
-          color: var(--text-slate);
-          font-size: 11px;
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          transition: color 0.2s;
+            text-decoration: none;
+            color: var(--text-slate);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: var(--transition);
         }
-        .nav-links a:hover { color: var(--primary-red); }
 
-        /* Hero */
-        .hero { padding: 128px 24px 80px 24px; }
-        .hero-inner { max-width: 1280px; margin: 0 auto; text-align: center; }
+        .nav-links a:hover {
+            color: var(--primary-red);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 24px 80px 24px;
+            text-align: center;
+        }
+
+        .hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
         .badge {
-          display: inline-block;
-          padding: 6px 16px;
-          background-color: #FEF2F2;
-          color: var(--primary-red);
-          border-radius: 9999px;
-          font-size: 10px;
-          font-weight: 900;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-          margin-bottom: 32px;
+            display: inline-block;
+            padding: 6px 16px;
+            background-color: #FEF2F2;
+            color: var(--primary-red);
+            border-radius: 9999px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 32px;
         }
+
         .hero-heading {
-          font-family: 'Playfair Display', serif;
-          font-size: 3.75rem;
-          font-style: italic;
-          font-weight: 500;
-          margin: 0 auto 32px auto;
-          max-width: 56rem;
-          line-height: 1.2;
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-style: italic;
+            font-weight: 500;
+            margin-bottom: 32px;
+            line-height: 1.2;
         }
+
         .hero-underline {
-          color: #7F1D1D;
-          font-weight: 800;
-          font-style: normal;
-          text-decoration: underline;
-          text-decoration-color: #FECACA;
-          text-decoration-thickness: 4px;
-          text-underline-offset: 8px;
-        }
-        .hero-subheading {
-          color: #64748B;
-          max-width: 36rem;
-          margin: 0 auto;
-          font-size: 1.125rem;
-          font-weight: 300;
-          line-height: 1.625;
+            color: #7F1D1D;
+            font-weight: 800;
+            font-style: normal;
+            text-decoration: underline;
+            text-decoration-color: #FECACA;
+            text-decoration-thickness: 4px;
+            text-underline-offset: 8px;
         }
 
-        /* Grid */
-        .main-grid-section { background-color: white; padding: 80px 24px; }
+        .hero-sub {
+            color: #64748B;
+            font-size: 1.125rem;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Grid Section */
+        .grid-section {
+            background-color: white;
+            padding: 80px 24px;
+        }
+
         .grid-container {
-          max-width: 1280px;
-          margin: 0 auto;
-          display: grid;
-          gap: 32px;
-          grid-template-columns: repeat(1, 1fr);
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         }
-        @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 1024px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
 
-        .card { display: flex; flex-direction: column; gap: 24px; }
-        .card-image {
-          aspect-ratio: 16/9;
-          overflow: hidden;
-          border-radius: 16px;
-          border: 1px solid #F1F5F9;
+        .card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
-        .card-image img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.5s;
+
+        .card-img {
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            border-radius: 16px;
+            border: 1px solid #F1F5F9;
         }
-        .card:hover .card-image img { transform: scale(1.05); }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.05);
+        }
+
         .card-title {
-          font-family: 'Playfair Display', serif;
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: var(--primary-red);
-          margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary-red);
         }
-        .card-desc {
-          color: var(--text-slate);
-          font-size: 0.875rem;
-          line-height: 1.625;
-          margin: 0;
+
+        .card-text {
+            color: var(--text-slate);
+            font-size: 0.9rem;
         }
-        .card-btn {
-          padding: 10px 24px;
-          background-color: var(--primary-red);
-          color: white;
-          border: none;
-          border-radius: 4px;
-          font-size: 10px;
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-          cursor: pointer;
-          width: fit-content;
-          transition: background-color 0.2s;
+
+        .btn {
+            padding: 10px 24px;
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            width: fit-content;
+            transition: var(--transition);
         }
-        .card-btn:hover { background-color: #0F172A; }
+
+        .btn:hover {
+            background-color: var(--heading-slate);
+        }
 
         /* Footer */
-        .footer { background-color: #0F172A; color: white; padding: 80px 24px; }
+        .footer {
+            background-color: #0F172A;
+            color: white;
+            padding: 80px 24px;
+        }
+
         .footer-inner {
-          max-width: 1280px;
-          margin: 0 auto;
-          display: flex;
-          flex-direction: column;
-          gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
         }
-        @media (min-width: 768px) { .footer-inner { flex-direction: row; justify-content: space-between; align-items: center; } }
-        .footer-left { text-align: center; }
-        @media (min-width: 768px) { .footer-left { text-align: left; } }
-        .footer-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0 0 16px 0; }
-        .footer-desc { color: #94A3B8; max-width: 28rem; font-size: 1rem; margin: 0; }
-        
-        .bank-details {
-          background-color: rgba(255,255,255,0.1);
-          padding: 32px;
-          border-radius: 24px;
-          border: 1px solid rgba(255,255,255,0.1);
-          backdrop-filter: blur(12px);
+
+        .footer-info h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
         }
-        .bank-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
-        .bank-icon { color: #F87171; }
-        .bank-label { font-weight: 700; font-size: 1.125rem; }
-        .bank-info { font-size: 0.875rem; color: #CBD5E1; margin: 0; }
+
+        .footer-info p {
+            color: #94A3B8;
+            max-width: 400px;
+        }
+
+        .bank-box {
+            background-color: rgba(255,255,255,0.05);
+            padding: 32px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .bank-box h5 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .bank-box p {
+            font-size: 0.85rem;
+            color: #CBD5E1;
+        }
 
         /* Modal */
-        .modal-overlay {
-          position: fixed;
-          inset: 0;
-          z-index: 100;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 16px;
-          background-color: rgba(15, 23, 42, 0.8);
-          backdrop-filter: blur(8px);
-        }
-        .modal-container {
-          background-color: white;
-          width: 100%;
-          max-width: 56rem;
-          max-height: 90vh;
-          overflow-y: auto;
-          border-radius: 24px;
-          position: relative;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-        .modal-close-btn {
-          position: absolute;
-          top: 24px;
-          right: 24px;
-          padding: 8px;
-          border-radius: 9999px;
-          background: none;
-          border: none;
-          cursor: pointer;
-          transition: background-color 0.2s;
-        }
-        .modal-close-btn:hover { background-color: #F1F5F9; }
-        .modal-body { padding: 32px; }
-        @media (min-width: 768px) { .modal-body { padding: 48px; } }
-
-        /* Deep Dive Content */
-        .deep-dive-content { display: flex; flex-direction: column; gap: 32px; }
-        .deep-dive-header { display: flex; flex-direction: column; gap: 32px; }
-        @media (min-width: 768px) { .deep-dive-header { flex-direction: row; } }
-        
-        .deep-dive-sidebar { width: 100%; flex-shrink: 0; }
-        @media (min-width: 768px) { .deep-dive-sidebar { width: 33.33%; } }
-        
-        .mentor-image-wrapper {
-          aspect-ratio: 3/4;
-          border-radius: 16px;
-          overflow: hidden;
-          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-          border: 4px solid white;
-        }
-        .mentor-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .mentor-name-caption {
-          margin-top: 16px;
-          text-align: center;
-          font-family: 'Playfair Display', serif;
-          color: var(--primary-red);
-          font-weight: 700;
-          font-size: 1.125rem;
-          font-style: italic;
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .deep-dive-main { flex: 1; display: flex; flex-direction: column; gap: 24px; }
-        .section-title-large { font-family: 'Playfair Display', serif; font-size: 2.25rem; font-weight: 700; margin: 0; }
-        .level-block { display: flex; flex-direction: column; gap: 12px; }
-        .level-heading { font-size: 1.25rem; font-weight: 700; color: var(--primary-red); margin: 0; }
-        .level-text { color: var(--text-slate); line-height: 1.625; margin: 0; }
-        
-        .quote-box {
-          background-color: #FEF2F2;
-          padding: 16px;
-          border-radius: 12px;
-          border-left: 4px solid var(--primary-red);
-          font-style: italic;
-          color: #7F1D1D;
-          font-size: 0.875rem;
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 24px;
+            position: relative;
+            padding: 48px;
+            animation: modalFade 0.3s ease;
+        }
+
+        @keyframes modalFade {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: #F1F5F9;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Detail Content */
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .detail-grid { grid-template-columns: 1fr; }
+            .hero-heading { font-size: 2.5rem; }
+        }
+
+        .mentor-card {
+            text-align: center;
+        }
+
+        .mentor-card img {
+            width: 100%;
+            border-radius: 16px;
+            border: 4px solid white;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .mentor-card p {
+            margin-top: 16px;
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-red);
+            font-style: italic;
+            font-weight: 700;
+        }
+
+        .detail-main h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.25rem;
+            margin-bottom: 24px;
+        }
+
+        .level-section {
+            margin-bottom: 24px;
+        }
+
+        .level-section h4 {
+            color: var(--primary-red);
+            margin-bottom: 8px;
+        }
+
+        .quote {
+            background: #FEF2F2;
+            padding: 20px;
+            border-left: 4px solid var(--primary-red);
+            font-style: italic;
+            margin: 20px 0;
+            font-size: 0.9rem;
         }
 
         .sadhana-block {
-          background-color: #F8FAFC;
-          padding: 32px;
-          border-radius: 24px;
-          border: 1px solid #E2E8F0;
+            background: #F8FAFC;
+            padding: 32px;
+            border-radius: 20px;
+            margin-top: 40px;
         }
-        .sadhana-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; margin: 0 0 16px 0; }
-        .sadhana-italic { color: var(--text-slate); font-style: italic; margin-bottom: 24px; }
-        .sadhana-text { color: var(--text-slate); margin-bottom: 24px; }
-        .highlight-text { font-weight: 700; color: var(--primary-red); }
-        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; }
-        .path-tag {
-          padding: 4px 12px;
-          background-color: white;
-          border: 1px solid #E2E8F0;
-          border-radius: 9999px;
-          font-size: 10px;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          color: #64748B;
-        }
-      `}} />
-    </div>
-  );
-};
 
-export default App;
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            margin: 4px;
+            text-transform: uppercase;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="logo-group">
+                <div class="logo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                </div>
+                <div class="logo-text">
+                    <h1>ATMAN GYAN</h1>
+                    <p>Dhyan Sadhana</p>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Dhyan Sadhna</a>
+                <a href="#">Outreach</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-inner">
+            <div class="badge">A Spiritual Foundation</div>
+            <h2 class="hero-heading">
+                “Observe <span class="hero-underline">Kutastha</span>, that is My Form.”
+            </h2>
+            <p class="hero-sub">
+                We seek to know the Self and achieve our truest potential through Yogic Science regardless of caste, creed or religion.
+            </p>
+        </div>
+    </header>
+
+    <main class="grid-section">
+        <div class="grid-container">
+            <!-- Samatva Card -->
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800" alt="Samatva">
+                </div>
+                <h3 class="card-title">Samatva Dhyan</h3>
+                <p class="card-text">Samatva Dhyan is the core in the wheel of Dhyan Sadhna led by Aparna Ji. It sets the foundation for higher spiritual growth.</p>
+                <button class="btn" onclick="openModal()">Read More</button>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800" alt="Geeta">
+                </div>
+                <h3 class="card-title">Bhagwad Geeta</h3>
+                <p class="card-text">Aparnaji's principles go above religion, following the ultimate text that leads us to the truth.</p>
+                <button class="btn">Read More</button>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800" alt="Anna Daan">
+                </div>
+                <h3 class="card-title">Anna Daan</h3>
+                <p class="card-text">An outreach initiative to contribute to Zero Hunger. Rejuvenators aim at feeding the underprivileged.</p>
+                <button class="btn">Read More</button>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&q=80&w=800" alt="Jagrati">
+                </div>
+                <h3 class="card-title">Jagrati</h3>
+                <p class="card-text">Educating and spiritualising underprivileged children with moral guidance and academic aids.</p>
+                <button class="btn">Read More</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <h4>Support Our Mission</h4>
+                <p>Your contributions help us continue our outreach programs like Anna Daan and Jagrati.</p>
+            </div>
+            <div class="bank-box">
+                <h5>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="21" x2="21" y2="21"></line><line x1="3" y1="7" x2="21" y2="7"></line><polyline points="5 7 5 3 19 3 19 7"></polyline><line x1="10" y1="21" x2="10" y2="11"></line><line x1="14" y1="21" x2="14" y2="11"></line><line x1="18" y1="21" x2="18" y2="11"></line><line x1="6" y1="21" x2="6" y2="11"></line></svg>
+                    Bank Details
+                </h5>
+                <p>Rejuvenation – A Spiritual Foundation</p>
+                <p>A/C: 50200008683488 | IFSC: HDFC0000078</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Implementation -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            
+            <div class="detail-grid">
+                <div class="mentor-card">
+                    <img src="https://images.unsplash.com/photo-1545389336-cf09bdabc999?auto=format&fit=crop&q=80&w=800" alt="Aparna Nevatia">
+                    <p>Aparna Nevatia</p>
+                </div>
+                <div class="detail-main">
+                    <h2>Samatva Dhyan</h2>
+                    
+                    <div class="level-section">
+                        <h4>Level - 1</h4>
+                        <p>Atman Gyan Dhyan Sadhna starts from Soham Dhyan or Samatva Dhyan. It sets the foundation for higher spiritual learning and helps in breaking deep-rooted notions, like — "meditation is meant only for the retired or for sanyasis."</p>
+                    </div>
+
+                    <div class="level-section">
+                        <h4>Level - 2</h4>
+                        <p>After basic concepts are understood, one moves to higher levels. While the basic level aims for happiness and peace, this level seeks answers to ultimate questions. Guided by Aparnaji, seekers attempt to know what God really is.</p>
+                        <div class="quote">
+                            "Reinforcing the aim of rejuvenation, to move on the path of spirituality... and to spread the message of 'Sarve Bhavantu Sukhinah' as far as possible."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sadhana-block">
+                <h3 class="font-serif" style="margin-bottom: 12px;">Atma Gyan Dhyan Sadhana</h3>
+                <p style="font-style: italic; color: var(--text-slate); margin-bottom: 16px;">Initiation into this serious path is given by our Guru, Mrs. Aparna Nevatia. These secretive techniques are disclosed only in the pure Guru-Shishya parampara.</p>
+                <p style="margin-bottom: 20px;">It covers the four interwoven paths of yoga: <strong style="color: var(--primary-red)">GyanYog, Karma Yog, Bhakti Yog, and RajYog</strong>.</p>
+                <div>
+                    <span class="tag">GyanYog</span>
+                    <span class="tag">Karma Yog</span>
+                    <span class="tag">Bhakti Yog</span>
+                    <span class="tag">RajYog</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Modal Logic
+        const modal = document.getElementById('modal');
+
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scroll
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scroll
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
