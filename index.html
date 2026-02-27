@@ -19,17 +19,15 @@ const App = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Modal Component
   const Modal = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
     return (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-md" onClick={onClose}></div>
-        <div className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl relative z-10 shadow-2xl animate-in zoom-in-95 duration-300">
-          <button onClick={onClose} className="absolute top-6 right-6 p-2 hover:bg-slate-100 rounded-full transition-colors">
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+          <button onClick={onClose} className="modal-close-btn">
             <X size={24} />
           </button>
-          <div className="p-8 md:p-12">
+          <div className="modal-body">
             {children}
           </div>
         </div>
@@ -38,53 +36,50 @@ const App = () => {
   };
 
   const SamatvaDeepDive = () => (
-    <div className="space-y-8">
-      <div className="flex flex-col md:flex-row gap-8 items-start">
-        <div className="w-full md:w-1/3 shrink-0">
-          <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+    <div className="deep-dive-content">
+      <div className="deep-dive-header">
+        <div className="deep-dive-sidebar">
+          <div className="mentor-image-wrapper">
             <img 
               src="https://images.unsplash.com/photo-1545389336-cf09bdabc999?auto=format&fit=crop&q=80&w=800" 
-              className="w-full h-full object-cover"
               alt="Aparna Nevatia"
             />
           </div>
-          <p className="mt-4 text-center font-serif text-red-700 font-bold text-lg italic">Aparna Nevatia</p>
+          <p className="mentor-name-caption">Aparna Nevatia</p>
         </div>
-        <div className="flex-1 space-y-6">
-          <h2 className="text-4xl font-serif font-bold text-slate-800">Samatva Dhyan</h2>
+        <div className="deep-dive-main">
+          <h2 className="section-title-large">Samatva Dhyan</h2>
           
-          <section className="space-y-3">
-            <h4 className="text-xl font-bold text-red-700">Level - 1</h4>
-            <p className="text-slate-600 leading-relaxed">
+          <section className="level-block">
+            <h4 className="level-heading">Level - 1</h4>
+            <p className="level-text">
               Atman Gyan Dhyan Sadhna starts from Soham Dhyan or Samatva Dhyan. It sets the foundation for higher spiritual learning and helps in breaking deep-rooted notions, like — "meditation is meant only for the retired or for sanyasis." It includes basic techniques explaining the true nature of dhyan and easy, effective ways to meditate at home.
             </p>
           </section>
 
-          <section className="space-y-3">
-            <h4 className="text-xl font-bold text-red-700">Level - 2</h4>
-            <p className="text-slate-600 leading-relaxed">
+          <section className="level-block">
+            <h4 className="level-heading">Level - 2</h4>
+            <p className="level-text">
               After basic concepts are understood, one moves to higher levels. While the basic level aims for happiness and peace, this level seeks answers to ultimate questions. Guided by Aparnaji, seekers attempt to know what God really is. From miraculous experiences to boundless energy, advanced meditation has no limits.
             </p>
-            <div className="bg-red-50 p-4 rounded-xl border-l-4 border-red-700 italic text-red-900 text-sm">
+            <div className="quote-box">
               "Reinforcing the aim of rejuvenation, to move on the path of spirituality... and to spread the message of 'Sarve Bhavantu Sukhinah' as far as possible."
             </div>
           </section>
         </div>
       </div>
 
-      <div className="bg-slate-50 p-8 rounded-3xl border border-slate-200">
-        <h3 className="text-2xl font-serif font-bold text-slate-800 mb-4">Atma Gyan Dhyan Sadhana</h3>
-        <p className="text-slate-600 mb-6 italic">
+      <div className="sadhana-block">
+        <h3 className="sadhana-title">Atma Gyan Dhyan Sadhana</h3>
+        <p className="sadhana-italic">
           Initiation into this serious path is given by our Guru, Mrs. Aparna Nevatia. These secretive techniques are disclosed only in the pure Guru-Shishya parampara.
         </p>
-        <p className="text-slate-600 mb-6">
-          It covers the four interwoven paths of yoga: <span className="font-bold text-red-700">GyanYog, Karma Yog, Bhakti Yog, and RajYog</span>. Through rigorous discipline (tap) and Sadhana, the Saadhak moves deeper into the spiritual world while fulfilling material duties.
+        <p className="sadhana-text">
+          It covers the four interwoven paths of yoga: <span className="highlight-text">GyanYog, Karma Yog, Bhakti Yog, and RajYog</span>. Through rigorous discipline (tap) and Sadhana, the Saadhak moves deeper into the spiritual world while fulfilling material duties.
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="tag-container">
           {['GyanYog', 'Karma Yog', 'Bhakti Yog', 'RajYog'].map(tag => (
-            <span key={tag} className="px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold uppercase tracking-wider text-slate-500">
-              {tag}
-            </span>
+            <span key={tag} className="path-tag">{tag}</span>
           ))}
         </div>
       </div>
@@ -92,135 +87,421 @@ const App = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB] font-sans text-slate-900">
+    <div className="app-container">
       <Modal isOpen={activeModal === 'samatva'} onClose={() => setActiveModal(null)}>
         <SamatvaDeepDive />
       </Modal>
 
-      {/* Nav */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-3' : 'bg-transparent py-6'}`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-red-700 rounded-lg flex items-center justify-center text-white">
+      <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
+        <div className="nav-inner">
+          <div className="nav-logo-group">
+            <div className="logo-icon">
               <Sparkles size={20} />
             </div>
-            <div>
-              <h1 className="text-lg font-serif font-black tracking-tight leading-none uppercase">ATMAN GYAN</h1>
-              <p className="text-[8px] tracking-[0.3em] text-red-600 font-bold uppercase mt-1">Dhyan Sadhana</p>
+            <div className="logo-text-group">
+              <h1 className="logo-main">ATMAN GYAN</h1>
+              <p className="logo-sub">Dhyan Sadhana</p>
             </div>
           </div>
-          <div className="hidden md:flex gap-8 text-[11px] font-bold uppercase tracking-widest text-slate-600">
-            <a href="#" className="hover:text-red-700 transition-colors">Home</a>
-            <a href="#" className="hover:text-red-700 transition-colors">Dhyan Sadhna</a>
-            <a href="#" className="hover:text-red-700 transition-colors">Outreach</a>
-            <a href="#" className="hover:text-red-700 transition-colors">Contact</a>
+          <div className="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Dhyan Sadhna</a>
+            <a href="#">Outreach</a>
+            <a href="#">Contact</a>
           </div>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-7xl mx-auto text-center space-y-8">
-          <div className="inline-block px-4 py-1.5 bg-red-50 rounded-full text-red-700 text-[10px] font-black uppercase tracking-[0.2em] mb-4">
-            A Spiritual Foundation
-          </div>
-          <h2 className="text-4xl md:text-6xl font-serif font-medium italic text-slate-800 max-w-4xl mx-auto leading-tight">
-            “Observe <span className="text-red-800 font-bold not-italic underline decoration-red-200 underline-offset-8">Kutastha</span>, that is My Form.”
+      <header className="hero">
+        <div className="hero-inner">
+          <div className="badge">A Spiritual Foundation</div>
+          <h2 className="hero-heading">
+            “Observe <span className="hero-underline">Kutastha</span>, that is My Form.”
           </h2>
-          <p className="text-slate-500 max-w-xl mx-auto text-lg font-light leading-relaxed">
+          <p className="hero-subheading">
             We seek to know the Self and achieve our truest potential through Yogic Science regardless of caste, creed or religion.
           </p>
         </div>
-      </section>
+      </header>
 
-      {/* Grid */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <main className="main-grid-section">
+        <div className="grid-container">
           
           {/* Samatva Dhyan Card */}
-          <div className="group space-y-6">
-            <div className="aspect-video overflow-hidden rounded-2xl shadow-sm border border-slate-100">
-              <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Samatva" />
+          <div className="card">
+            <div className="card-image">
+              <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800" alt="Samatva" />
             </div>
-            <h3 className="text-2xl font-serif font-bold text-red-700">Samatva Dhyan</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
+            <h3 className="card-title">Samatva Dhyan</h3>
+            <p className="card-desc">
               Samatva Dhyan is the core in the wheel of Dhyan Sadhna led by Aparna Ji. It sets the foundation for higher spiritual growth.
             </p>
-            <button 
-              onClick={() => setActiveModal('samatva')}
-              className="px-6 py-2.5 bg-red-700 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded hover:bg-slate-800 transition-all"
-            >
-              Read More
-            </button>
+            <button onClick={() => setActiveModal('samatva')} className="card-btn">Read More</button>
           </div>
 
           {/* Bhagwad Geeta Card */}
-          <div className="group space-y-6">
-            <div className="aspect-video overflow-hidden rounded-2xl shadow-sm border border-slate-100">
-              <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Geeta" />
+          <div className="card">
+            <div className="card-image">
+              <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800" alt="Geeta" />
             </div>
-            <h3 className="text-2xl font-serif font-bold text-red-700">Bhagwad Geeta</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
+            <h3 className="card-title">Bhagwad Geeta</h3>
+            <p className="card-desc">
               Aparnaji's principles go above religion, following the ultimate text that leads us to the truth. She has taken Bhagawada Gita.
             </p>
-            <button className="px-6 py-2.5 bg-red-700 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded hover:bg-slate-800 transition-all">
-              Read More
-            </button>
+            <button className="card-btn">Read More</button>
           </div>
 
           {/* Anna Daan Card */}
-          <div className="group space-y-6">
-            <div className="aspect-video overflow-hidden rounded-2xl shadow-sm border border-slate-100">
-              <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Anna Daan" />
+          <div className="card">
+            <div className="card-image">
+              <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800" alt="Anna Daan" />
             </div>
-            <h3 className="text-2xl font-serif font-bold text-red-700">Anna Daan</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
+            <h3 className="card-title">Anna Daan</h3>
+            <p className="card-desc">
               An outreach initiative to contribute to Zero Hunger. Rejuvenators aim at feeding the underprivileged across the community.
             </p>
-            <button className="px-6 py-2.5 bg-red-700 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded hover:bg-slate-800 transition-all">
-              Read More
-            </button>
+            <button className="card-btn">Read More</button>
           </div>
 
           {/* Jagrati Card */}
-          <div className="group space-y-6">
-            <div className="aspect-video overflow-hidden rounded-2xl shadow-sm border border-slate-100">
-              <img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Jagrati" />
+          <div className="card">
+            <div className="card-image">
+              <img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&q=80&w=800" alt="Jagrati" />
             </div>
-            <h3 className="text-2xl font-serif font-bold text-red-700">Jagrati</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
+            <h3 className="card-title">Jagrati</h3>
+            <p className="card-desc">
               Educating and spiritualising underprivileged children with material aids like clothes, academic food, and moral guidance.
             </p>
-            <button className="px-6 py-2.5 bg-red-700 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded hover:bg-slate-800 transition-all">
-              Read More
-            </button>
+            <button className="card-btn">Read More</button>
           </div>
 
         </div>
-      </section>
+      </main>
 
-      {/* Footer / Donation */}
-      <footer className="bg-slate-900 text-white py-20 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
-          <div className="space-y-4 text-center md:text-left">
-            <h4 className="text-2xl font-serif font-bold">Support Our Mission</h4>
-            <p className="text-slate-400 max-w-md">Your contributions help us continue our outreach programs like Anna Daan and Jagrati.</p>
+      <footer className="footer">
+        <div className="footer-inner">
+          <div className="footer-left">
+            <h4 className="footer-title">Support Our Mission</h4>
+            <p className="footer-desc">Your contributions help us continue our outreach programs like Anna Daan and Jagrati.</p>
           </div>
-          <div className="bg-white/10 p-8 rounded-3xl border border-white/10 backdrop-blur-md">
-            <div className="flex items-center gap-4 mb-4">
-              <Landmark className="text-red-400" />
-              <span className="font-bold text-lg">Bank Details</span>
+          <div className="bank-details">
+            <div className="bank-header">
+              <Landmark className="bank-icon" />
+              <span className="bank-label">Bank Details</span>
             </div>
-            <p className="text-sm text-slate-300">Rejuvenation – A Spiritual Foundation</p>
-            <p className="text-sm text-slate-300">A/C: 50200008683488 | IFSC: HDFC0000078</p>
+            <p className="bank-info">Rejuvenation – A Spiritual Foundation</p>
+            <p className="bank-info">A/C: 50200008683488 | IFSC: HDFC0000078</p>
           </div>
         </div>
       </footer>
 
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@200..800&display=swap');
+        
+        :root {
+          --primary-red: #B91C1C;
+          --text-slate: #475569;
+          --heading-slate: #1E293B;
+          --bg-cream: #FDFCFB;
+        }
+
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; }
+        
+        .app-container {
+          min-height: 100-vh;
+          background-color: var(--bg-cream);
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          color: var(--heading-slate);
+        }
+
         .font-serif { font-family: 'Playfair Display', serif; }
-        .font-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        /* Navbar */
+        .navbar {
+          position: fixed;
+          top: 0;
+          width: 100%;
+          z-index: 50;
+          transition: all 0.3s ease;
+          padding: 24px 0;
+        }
+        .navbar-scrolled {
+          background-color: white;
+          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+          padding: 12px 0;
+        }
+        .nav-inner {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 24px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .nav-logo-group { display: flex; align-items: center; gap: 12px; }
+        .logo-icon {
+          width: 40px;
+          height: 40px;
+          background-color: var(--primary-red);
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+        }
+        .logo-text-group h1 {
+          font-family: 'Playfair Display', serif;
+          font-size: 18px;
+          font-weight: 900;
+          margin: 0;
+          line-height: 1;
+        }
+        .logo-sub {
+          font-size: 8px;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: var(--primary-red);
+          font-weight: 800;
+          margin: 4px 0 0 0;
+        }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a {
+          text-decoration: none;
+          color: var(--text-slate);
+          font-size: 11px;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--primary-red); }
+
+        /* Hero */
+        .hero { padding: 128px 24px 80px 24px; }
+        .hero-inner { max-width: 1280px; margin: 0 auto; text-align: center; }
+        .badge {
+          display: inline-block;
+          padding: 6px 16px;
+          background-color: #FEF2F2;
+          color: var(--primary-red);
+          border-radius: 9999px;
+          font-size: 10px;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          margin-bottom: 32px;
+        }
+        .hero-heading {
+          font-family: 'Playfair Display', serif;
+          font-size: 3.75rem;
+          font-style: italic;
+          font-weight: 500;
+          margin: 0 auto 32px auto;
+          max-width: 56rem;
+          line-height: 1.2;
+        }
+        .hero-underline {
+          color: #7F1D1D;
+          font-weight: 800;
+          font-style: normal;
+          text-decoration: underline;
+          text-decoration-color: #FECACA;
+          text-decoration-thickness: 4px;
+          text-underline-offset: 8px;
+        }
+        .hero-subheading {
+          color: #64748B;
+          max-width: 36rem;
+          margin: 0 auto;
+          font-size: 1.125rem;
+          font-weight: 300;
+          line-height: 1.625;
+        }
+
+        /* Grid */
+        .main-grid-section { background-color: white; padding: 80px 24px; }
+        .grid-container {
+          max-width: 1280px;
+          margin: 0 auto;
+          display: grid;
+          gap: 32px;
+          grid-template-columns: repeat(1, 1fr);
+        }
+        @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
+
+        .card { display: flex; flex-direction: column; gap: 24px; }
+        .card-image {
+          aspect-ratio: 16/9;
+          overflow: hidden;
+          border-radius: 16px;
+          border: 1px solid #F1F5F9;
+        }
+        .card-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s;
+        }
+        .card:hover .card-image img { transform: scale(1.05); }
+        .card-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--primary-red);
+          margin: 0;
+        }
+        .card-desc {
+          color: var(--text-slate);
+          font-size: 0.875rem;
+          line-height: 1.625;
+          margin: 0;
+        }
+        .card-btn {
+          padding: 10px 24px;
+          background-color: var(--primary-red);
+          color: white;
+          border: none;
+          border-radius: 4px;
+          font-size: 10px;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          cursor: pointer;
+          width: fit-content;
+          transition: background-color 0.2s;
+        }
+        .card-btn:hover { background-color: #0F172A; }
+
+        /* Footer */
+        .footer { background-color: #0F172A; color: white; padding: 80px 24px; }
+        .footer-inner {
+          max-width: 1280px;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          gap: 40px;
+        }
+        @media (min-width: 768px) { .footer-inner { flex-direction: row; justify-content: space-between; align-items: center; } }
+        .footer-left { text-align: center; }
+        @media (min-width: 768px) { .footer-left { text-align: left; } }
+        .footer-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0 0 16px 0; }
+        .footer-desc { color: #94A3B8; max-width: 28rem; font-size: 1rem; margin: 0; }
+        
+        .bank-details {
+          background-color: rgba(255,255,255,0.1);
+          padding: 32px;
+          border-radius: 24px;
+          border: 1px solid rgba(255,255,255,0.1);
+          backdrop-filter: blur(12px);
+        }
+        .bank-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+        .bank-icon { color: #F87171; }
+        .bank-label { font-weight: 700; font-size: 1.125rem; }
+        .bank-info { font-size: 0.875rem; color: #CBD5E1; margin: 0; }
+
+        /* Modal */
+        .modal-overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 16px;
+          background-color: rgba(15, 23, 42, 0.8);
+          backdrop-filter: blur(8px);
+        }
+        .modal-container {
+          background-color: white;
+          width: 100%;
+          max-width: 56rem;
+          max-height: 90vh;
+          overflow-y: auto;
+          border-radius: 24px;
+          position: relative;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .modal-close-btn {
+          position: absolute;
+          top: 24px;
+          right: 24px;
+          padding: 8px;
+          border-radius: 9999px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          transition: background-color 0.2s;
+        }
+        .modal-close-btn:hover { background-color: #F1F5F9; }
+        .modal-body { padding: 32px; }
+        @media (min-width: 768px) { .modal-body { padding: 48px; } }
+
+        /* Deep Dive Content */
+        .deep-dive-content { display: flex; flex-direction: column; gap: 32px; }
+        .deep-dive-header { display: flex; flex-direction: column; gap: 32px; }
+        @media (min-width: 768px) { .deep-dive-header { flex-direction: row; } }
+        
+        .deep-dive-sidebar { width: 100%; flex-shrink: 0; }
+        @media (min-width: 768px) { .deep-dive-sidebar { width: 33.33%; } }
+        
+        .mentor-image-wrapper {
+          aspect-ratio: 3/4;
+          border-radius: 16px;
+          overflow: hidden;
+          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+          border: 4px solid white;
+        }
+        .mentor-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .mentor-name-caption {
+          margin-top: 16px;
+          text-align: center;
+          font-family: 'Playfair Display', serif;
+          color: var(--primary-red);
+          font-weight: 700;
+          font-size: 1.125rem;
+          font-style: italic;
+        }
+
+        .deep-dive-main { flex: 1; display: flex; flex-direction: column; gap: 24px; }
+        .section-title-large { font-family: 'Playfair Display', serif; font-size: 2.25rem; font-weight: 700; margin: 0; }
+        .level-block { display: flex; flex-direction: column; gap: 12px; }
+        .level-heading { font-size: 1.25rem; font-weight: 700; color: var(--primary-red); margin: 0; }
+        .level-text { color: var(--text-slate); line-height: 1.625; margin: 0; }
+        
+        .quote-box {
+          background-color: #FEF2F2;
+          padding: 16px;
+          border-radius: 12px;
+          border-left: 4px solid var(--primary-red);
+          font-style: italic;
+          color: #7F1D1D;
+          font-size: 0.875rem;
+        }
+
+        .sadhana-block {
+          background-color: #F8FAFC;
+          padding: 32px;
+          border-radius: 24px;
+          border: 1px solid #E2E8F0;
+        }
+        .sadhana-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; margin: 0 0 16px 0; }
+        .sadhana-italic { color: var(--text-slate); font-style: italic; margin-bottom: 24px; }
+        .sadhana-text { color: var(--text-slate); margin-bottom: 24px; }
+        .highlight-text { font-weight: 700; color: var(--primary-red); }
+        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .path-tag {
+          padding: 4px 12px;
+          background-color: white;
+          border: 1px solid #E2E8F0;
+          border-radius: 9999px;
+          font-size: 10px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: #64748B;
+        }
       `}} />
     </div>
   );
